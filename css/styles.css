@@ -6,13 +6,17 @@ Secondary text color (p):               #757575;
 Active white color (bg, btn-title):     #FFFFFF;
 Opacity white color (address link):     rgba(255, 255, 255, 0.6);
 Active black color (logo, nav):         #000000;
+Opacity black:                          rgba(0, 0, 0, 0.1);
 Background button color (bg btn):       #F5F4FA;
 Background color (bg):                  #2F303A;
 Header line color (border):             #ececec;
 Border card (border):                   #eeeeee;
 Icon color:                             #AFB1B8;
+Subtitle bg:                            rgba(47, 48, 58, 0.8);
 Gradient overlay (action box):          rgba(47, 48, 58, 0.4);
 Opacity white (icon bg):                rgba(255, 255, 255, 0.1);
+Focus color opacity:                    rgba(33, 150, 243, 0.9);
+Backdrop color:                         rgba(0, 0, 0, 0.2);
 
 Team card shadow:                       0px 1px 3px rgba(0, 0, 0, 0.12),
                                         0px 1px 1px rgba(0, 0, 0, 0.14),
@@ -31,6 +35,10 @@ Gallery card shadow (gallery-item):     0px 1px 1px rgba(0, 0, 0, 0.12),
                                         1px 4px 6px rgba(0, 0, 0, 0.16)
 
 Margin gallery card:                    30px;
+
+Duration: 250ms;
+
+Cubic bezier:                           cubic-bezier(0.4, 0, 0.2, 1);
 */
 
 /* Color palette */
@@ -42,6 +50,7 @@ Margin gallery card:                    30px;
   --active-white: #ffffff;
   --opacity-white: rgba(255, 255, 255, 0.6);
   --active-black: #000000;
+  --opacity-black: rgba(0, 0, 0, 0.1);
   --bg-btn-color: #f5f4fa;
   --bg-color: #2f303a;
   --header-line: #ececec;
@@ -49,7 +58,9 @@ Margin gallery card:                    30px;
   --icon-color: #afb1b8;
   --gradient-overlay: rgba(47, 48, 58, 0.4);
   --opacity-white-bg: rgba(255, 255, 255, 0.1);
-
+  --opacity-focus-color: rgba(33, 150, 243, 0.9);
+  --subtitle-bg: rgba(47, 48, 58, 0.8);
+  --backdrop-bg: rgba(0, 0, 0, 0.2);
   --team-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
     0px 2px 1px rgba(0, 0, 0, 0.2);
 
@@ -63,6 +74,10 @@ Margin gallery card:                    30px;
     1px 4px 6px rgba(0, 0, 0, 0.16);
 
   --gallery-gap: 30px;
+
+  --trans-duration: 250ms;
+
+  --cubic-bezier: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Global */
@@ -110,6 +125,68 @@ img {
 .section {
   padding: 94px 0px;
 }
+
+/* Modal */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--backdrop-bg);
+
+  transition: opacity var(--trans-duration) var(--cubic-bezier);
+
+  opacity: 1;
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%) scale(1);
+
+  width: 528px;
+  height: 581px;
+
+  background-color: var(--active-white);
+  box-shadow: var(--team-shadow)
+  border-radius: 4px;
+
+  transition: transform var(--trans-duration) var(--cubic-bezier);
+}
+
+.btn-modal-close {
+  position: relative;
+  top: 7px;
+  left: calc(528px - 30px - 8px);
+
+  width: 30px;
+  height: 30px;
+
+  font-size: 16px;
+  color: var(--active-black);
+
+  background-color: var(--active-white);
+
+  border: 1px solid var(--opacity-black);
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
 /* Header logo */
 .logo {
   font-family: 'Raleway', sans-serif;
@@ -145,6 +222,7 @@ img {
 }
 
 .nav-item {
+  position: relative;
   font-weight: 500;
   line-height: 1.14;
   letter-spacing: 0.02em;
@@ -159,6 +237,8 @@ img {
   padding-top: 32px;
   padding-bottom: 32px;
   color: var(--pimary-text);
+
+  transition: color var(--trans-duration) var(--cubic-bezier);
 }
 
 .nav-link.active {
@@ -168,6 +248,20 @@ img {
 .nav-link:hover,
 .nav-link:focus {
   color: var(--focus-color);
+}
+
+.active::after {
+  content: '';
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 4px;
+  background-color: var(--focus-color);
+
+  border-radius: 2px;
 }
 
 /* Header contact */
@@ -193,6 +287,8 @@ img {
   align-items: center;
 
   color: var(--secondary-text);
+
+  transition: color var(--trans-duration) var(--cubic-bezier);
 }
 
 .contact-link:hover,
@@ -246,6 +342,9 @@ img {
 
   border: none;
   border-radius: 4px;
+
+  transition: background-color var(--trans-duration) var(--cubic-bezier),
+    box-shadow var(--trans-duration) var(--cubic-bezier);
 
   cursor: pointer;
 }
@@ -330,6 +429,7 @@ img {
 }
 
 /* About us section */
+
 .about-us-section {
   padding-top: 0px;
 }
@@ -338,8 +438,29 @@ img {
   display: flex;
 }
 
+.about-us-item {
+  position: relative;
+}
+
 .about-us-item:not(:last-child) {
   margin-right: 30px;
+}
+
+.about-us-subtitle {
+  position: absolute;
+  bottom: 0;
+
+  padding: 27px 0;
+  width: 100%;
+
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.14;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  color: var(--active-white);
+  background-color: var(--subtitle-bg);
 }
 
 /* Team side */
@@ -406,6 +527,9 @@ img {
   align-items: center;
 
   border-radius: 50%;
+
+  transition: color var(--trans-duration) var(--cubic-bezier),
+    background-color var(--trans-duration) var(--cubic-bezier);
 }
 
 .icons-team {
@@ -434,6 +558,9 @@ img {
 
   border: 1px solid currentColor;
   border-radius: 4px;
+
+  transition: color var(--trans-duration) var(--cubic-bezier),
+    border-color var(--trans-duration) var(--cubic-bezier);
 }
 
 .icons-clients {
@@ -476,6 +603,7 @@ img {
 
 .address-first {
   color: var(--active-white);
+  transition: color var(--trans-duration) var(--cubic-bezier);
 }
 
 .address-link {
@@ -484,6 +612,8 @@ img {
   letter-spacing: 0.03em;
 
   color: var(--opacity-white);
+
+  transition: color var(--trans-duration) var(--cubic-bezier);
 }
 
 .address-link:hover,
@@ -523,6 +653,8 @@ img {
   color: var(--active-white);
   background-color: var(--opacity-white-bg);
   border-radius: 50%;
+
+  transition: background-color var(--trans-duration) var(--cubic-bezier);
 }
 
 .icons-join {
@@ -549,7 +681,7 @@ img {
   margin-right: 8px;
 }
 
-.filter-btn.active {
+.filter-btn.current {
   background-color: var(--focus-color);
   color: var(--active-white);
   box-shadow: var(--btn-shadow);
@@ -569,6 +701,10 @@ img {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+
+  transition: color var(--trans-duration) var(--cubic-bezier),
+    background-color var(--trans-duration) var(--cubic-bezier),
+    box-shadow var(--trans-duration) var(--cubic-bezier);
 }
 
 .filter-btn:hover,
@@ -592,6 +728,8 @@ img {
   margin-left: var(--gallery-gap);
 
   background-color: var(--active-white);
+
+  transition: box-shadow var(--trans-duration) var(--cubic-bezier);
 }
 
 .gallery-item:hover,
@@ -622,4 +760,37 @@ img {
   letter-spacing: 0.06em;
 
   color: var(--secondary-text);
+}
+
+/* Gallery overlay */
+.gallery-thumb {
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  transform: translateY(100%);
+  transition: transform var(--trans-duration) var(--cubic-bezier);
+
+  background-color: var(--opacity-focus-color);
+}
+
+.gallery-item:hover .gallery-overlay {
+  transform: translateY(0);
+}
+
+.gallery-description {
+  padding: 63px 24px;
+
+  font-size: 18px;
+  line-height: 1.56;
+  letter-spacing: 0.03em;
+
+  color: var(--active-white);
 }
