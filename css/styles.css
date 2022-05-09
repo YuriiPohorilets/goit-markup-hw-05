@@ -450,11 +450,12 @@ img {
   position: absolute;
   bottom: 0;
 
+  display: flex;
   padding: 27px 0;
   width: 100%;
+  justify-content: center;
 
   font-weight: 700;
-  text-align: center;
   line-height: 1.14;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -583,6 +584,7 @@ img {
 
 .footer-box {
   display: flex;
+  align-items: baseline;
 }
 
 .address-box {
@@ -627,10 +629,6 @@ img {
 }
 
 /* Join section */
-.join {
-  margin-top: 12px;
-}
-
 .join-subtitle {
   color: var(--active-white);
   margin-bottom: 20px;
