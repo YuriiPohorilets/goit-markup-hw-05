@@ -162,7 +162,7 @@ img {
   height: 581px;
 
   background-color: var(--active-white);
-  box-shadow: var(--team-shadow)
+  box-shadow: var(--team-shadow);
   border-radius: 4px;
 
   transition: transform var(--trans-duration) var(--cubic-bezier);
